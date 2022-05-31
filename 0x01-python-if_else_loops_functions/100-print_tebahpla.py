@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-for ascii_num in range(122, 96, -1):
-	if ascii_num % 2 == 1:
-		ascii_num = ascii_num - 32
-	print("{:c}".format(ascii_num), end='')
+
+i = 0
+for c in range(ord('z'), ord('a') - 1, -1):
+    print("{}".format(chr(c - i)), end="")
+    i = 32 if i == 0 else 0
