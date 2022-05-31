@@ -4,4 +4,3 @@ for num in range(0, 100):
         print("{:d}".format(num))
         break
     print("{:02d}, ".format(num), end="")
-    
