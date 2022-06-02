@@ -1,14 +1,8 @@
 #!/usr/bin/python3
-import sys
-
-
-def main(*argv):
-    arguments = len(sys.argv)
-    sum = 0
-    if arguments > 1:
-        for args in sys.argv:
-            if args != sys.argv[0]:
-                sum = sum + int(args)
-    print(sum)
 if __name__ == "__main__":
-    main()
+    from sys import argv
+    num_args = len(argv)
+    total = 0
+    for i in range(1, num_args):
+        total += int(argv[i])
+    print("{:d}".format(total))
