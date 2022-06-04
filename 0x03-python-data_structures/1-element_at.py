@@ -1,7 +1,4 @@
 #!/usr/bin/python3
-from re import I
-
-
 def element_at(my_list, idx):
     if idx < 0:
         return (None)
