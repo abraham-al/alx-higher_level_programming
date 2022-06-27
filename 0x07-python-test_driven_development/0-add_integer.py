@@ -8,7 +8,7 @@ def add_integer(a, b=98):
     float arg are typecasted to int before addition
 
     Args:
-        a (_type_): first arg
+        a (int): first arg
         b (int, optional): second arg. Defaults to 98.
     
     Raises:
