@@ -1,62 +1,89 @@
 #!/usr/bin/python3
-"""
-nqueens backtracking program to print the coordinates of n queens
-on an nxn grid such that they are all in non-attacking positions
-"""
+""" defines a Rectangle class"""
 
 
-from sys import argv
+class Rectangle:
+    """Rectangle Class"""
+    number_of_instances = 0
+    print_symbol = '#'
 
-if __name__ == "__main__":
-    a = []
-    if len(argv) != 2:
-        print("Usage: nqueens N")
-        exit(1)
-    if argv[1].isdigit() is False:
-        print("N must be a number")
-        exit(1)
-    n = int(argv[1])
-    if n < 4:
-        print("N must be at least 4")
-        exit(1)
+    def __init__(self, width=0, height=0):
+        """ Init Method """
+        self.width = width
+        self.height = height
+        Rectangle.number_of_instances += 1
 
-    # initialize the answer list
-    for i in range(n):
-        a.append([i, None])
+    @property
+    def width(self):
+        """getter def"""
+        return self.__width
 
-    def already_exists(y):
-        """check that a queen does not already exist in that y value"""
-        for x in range(n):
-            if y == a[x][1]:
-                return True
-        return False
+    @width.setter
+    def width(self, value):
+        """setter def"""
+        if type(value) is not int:
+            raise TypeError('width must be an integer')
+        if value < 0:
+            raise ValueError('width must be >= 0')
+        self.__width = value
 
-    def reject(x, y):
-        """determines whether or not to reject the solution"""
-        if (already_exists(y)):
-            return False
-        i = 0
-        while(i < x):
-            if abs(a[i][1] - y) == abs(i - x):
-                return False
-            i += 1
-        return True
+    @property
+    def height(self):
+        """getter def"""
+        return self.__height
 
-    def clear_a(x):
-        """clears the answers from the point of failure on"""
-        for i in range(x, n):
-            a[i][1] = None
+    @height.setter
+    def height(self, value):
+        """setter def"""
+        if type(value) is not int:
+            raise TypeError('height must be an integer')
+        if value < 0:
+            raise ValueError('height must be >= 0')
+        self.__height = value
 
-    def nqueens(x):
-        """recursive backtracking function to find the solution"""
-        for y in range(n):
-            clear_a(x)
-            if reject(x, y):
-                a[x][1] = y
-                if (x == n - 1):  # accepts the solution
-                    print(a)
-                else:
-                    nqueens(x + 1)  # moves on to next x value to continue
+    def area(self):
+        """define area def"""
+        return self.__width * self.__height
 
-    # start the recursive process at x = 0
-    nqueens(0)
+    def perimeter(self):
+        """define perimeter def"""
+        if self.__width == 0 or self.__height == 0:
+            return 0
+        return(self.__width * 2) + (self.__height * 2)
+
+    def __str__(self):
+        """define informal print str"""
+        if self.__width == 0 or self.__height == 0:
+            return ""
+        else:
+            hsh = str(self.print_symbol)
+            return ((hsh*self.__width + "\n")*self.__height)[:-1]
+
+    def __repr__(self):
+        """define official print repr"""
+        return 'Rectangle({}, {})'.format(self.__width, self.__height)
+
+    def __del__(self):
+        """define delete method"""
+        Rectangle.number_of_instances -= 1
+        print('Bye rectangle...')
+
+    @staticmethod
+    def bigger_or_equal(rect_1, rect_2):
+        """
+            Biggest Rectangle (Rectangle)
+        """
+        if not isinstance(rect_1, Rectangle):
+            raise TypeError("rect_1 must be an instance of Rectangle")
+        if not isinstance(rect_2, Rectangle):
+            raise TypeError("rect_2 must be an instance of Rectangle")
+        Area1 = rect_1.area()
+        Area2 = rect_2.area()
+        if Area1 >= Area2:
+            return rect_1
+        return rect_2
+
+    @classmethod
+    def square(cls, size=0):
+        """ Returns a new Rectangle instance """
+        return (cls(size, size))
