@@ -3,9 +3,7 @@
 
 
 def add_integer(a, b=98):
-    """ Return the integer addition of a and b.
-    
-    float arg are typecasted to int before addition
+    """ Return the integer addition of a and b.float arg are typecasted to int before addition
 
     Args:
         a (int): first arg
