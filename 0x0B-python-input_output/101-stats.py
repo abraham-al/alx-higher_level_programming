@@ -1,37 +1,31 @@
+
 #!/usr/bin/python3
-'''Module for log parsing script.'''
 import sys
+import io
 
-if __name__ == "__main__":
-    size = [0]
-    codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+#input = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
+#with open(input, "r", encoding="utf-8") as file:
+ #   for line in file:
+  #      print(line)
 
-    def check_match(line):
-        '''Checks for regexp match in line.'''
-        try:
-            line = line[:-1]
-            words = line.split(" ")
-            size[0] += int(words[-1])
-            code = int(words[-2])
-            if code in codes:
-                codes[code] += 1
-        except:
-            pass
+#input = io.TextIOWrapper(sys.stdin , encoding='utf-8')
 
-    def print_stats():
-        '''Prints accumulated statistics.'''
-        print("File size: {}".format(size[0]))
-        for k in sorted(codes.keys()):
-            if codes[k]:
-                print("{}: {}".format(k, codes[k]))
-    i = 1
-    try:
-        for line in sys.stdin:
-            check_match(line)
-            if i % 10 == 0:
-                print_stats()
-            i += 1
-    except KeyboardInterrupt:
-        print_stats()
-        raise
-    print_stats()
+dictstatus = {}
+totalsize = 0
+totalcount = 0
+for line in sys.stdin:
+    split = line.split()
+    status = split[-2]
+    totalsize += int(split[-1])
+    if status in dictstatus.keys():
+        dictstatus[status] += 1
+    else:
+        dictstatus[status] = 1
+    totalcount += 1
+    if totalcount == 10:
+        sortme = sorted(dictstatus.keys())
+        print("File size:", totalsize)
+        for keys in sortme:
+            print("{}: {}".format(keys, dictstatus[keys]))
+        totalcount = 0
+        continue
