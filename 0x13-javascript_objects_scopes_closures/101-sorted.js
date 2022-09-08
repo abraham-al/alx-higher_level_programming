@@ -7,4 +7,5 @@ for (const key in dict) {
   }
   di[dict[key]].push(key);
 }
+
 console.log(di);
